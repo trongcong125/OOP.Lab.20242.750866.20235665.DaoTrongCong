@@ -1,0 +1,13 @@
+Bài 10:
+Trong Java, không thể khai báo hai constructor có cùng danh sách tham số trong cùng một lớp. Điều này là do trình biên dịch không thể phân biệt được chúng khi gọi constructor, dẫn đến lỗi biên dịch.
+
+Tuy nhiên, Java cho phép một lớp có nhiều constructor  với danh sách tham số khác nhau . Điều này giúp lập trình viên có thể tạo nhiều cách khởi tạo đối tượng phù hợp với từng trường hợp cụ thể.
+
+Bài 16:
+Câu 1: Tại sao sau khi gọi swap(jungleDVD, cinderellaDVD), tiêu đề của hai đối tượng vẫn không đổi?
+Khi gọi phương thức swap(jungleDVD, cinderellaDVD), hai biến jungleDVD và cinderellaDVD được truyền vào dưới dạng tham chiếu. Điều này có nghĩa là giá trị (địa chỉ) của hai biến này được sao chép vào tham số của phương thức swap().
+
+Bên trong phương thức, chỉ có các tham số cục bộ được hoán đổi, còn các biến ban đầu trong phương thức main() không thay đổi. Vì vậy, sau khi gọi swap(), tiêu đề của hai đối tượng vẫn giữ nguyên.
+
+Câu 2: Tại sao sau khi gọi changeTitle(jungleDVD, cinderellaDVD.getTitle()), tiêu đề của jungleDVD lại thay đổi?
+Khi truyền jungleDVD vào phương thức changeTitle(), tham số trong phương thức vẫn trỏ đến cùng một đối tượng trong bộ nhớ heap. Do đó, khi tiêu đề của đối tượng này được thay đổi trong phương thức, sự thay đổi này cũng ảnh hưởng đến đối tượng bên ngoài.
