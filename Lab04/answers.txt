@@ -1,0 +1,61 @@
+Questions:
+Programming with AWT and Swing is quite similar (similar elements including container/components, and 
+event-handling). However, there are some differences that you need to note: 
+- Compare the top-level containers in Swing and AWT 
+- Compare the class name of components in AWT and the corresponding class’s name in Swing 
+- Compare the event-handling of Swing and AWT applications 
+The resulting appearances of the applications developed using Swing and AWT might be different as well. 
+Make comparisons.  
+
+---------------------------------------------------------------------------------------------------------------------
+
+So sánh:  
+
+1. Top-Level Containers
+AWT:
+- Main window: java.awt.Frame
+- Dialog: java.awt.Dialog
+- Applet: java.applet.Applet
+- Window without title: java.awt.Window
+- Panel for grouping: java.awt.Panel
+
+Swing:
+- Main window: javax.swing.JFrame
+- Dialog: javax.swing.JDialog
+- Applet: javax.swing.JApplet
+- Window without title: javax.swing.JWindow
+- Panel for grouping: javax.swing.JPanel
+
+AWT containers are heavyweight (native peers) and rendered by the OS. Swing containers are lightweight (Java-rendered) but still use an AWT peer for the window boundary.
+
+2. Component Class Names
+AWT -> Swing
+- Button -> JButton
+- Label -> JLabel
+- TextField -> JTextField
+- TextArea -> JTextArea
+- Choice -> JComboBox
+- List -> JList
+- Checkbox -> JCheckBox
+- CheckboxGroup -> ButtonGroup
+- Scrollbar -> JScrollBar
+- MenuBar, Menu, MenuItem -> JMenuBar, JMenu, JMenuItem
+- Canvas -> JPanel / JComponent
+
+Swing prefixes component classes with 'J' and all Swing components inherit from javax.swing.JComponent.
+
+3. Event Handling
+- Both AWT and Swing use the delegation-based event model (introduced in Java 1.1) with listener interfaces in java.awt.event.
+- Registration is done via component.addXxxListener(...).
+- Swing enforces that all UI updates and event callbacks occur on the Event Dispatch Thread (EDT) via SwingUtilities.invokeLater or invokeAndWait.
+- AWT is more forgiving but it is still recommended to use the EDT when mixing UI updates.
+
+4. Appearance & Look-and-Feel
+AWT:
+- Uses native OS widgets (heavyweight), so appearance is platform-dependent.
+- Fixed look determined by the host OS; no cross-platform theming.
+
+Swing:
+- Paints components in Java (lightweight), providing consistent rendering across platforms.
+- Supports pluggable look-and-feel (e.g., Metal, Nimbus, GTK+, Windows, or custom).
+- Highly customizable at the pixel level; can switch theme at runtime via UIManager.setLookAndFeel().
