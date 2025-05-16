@@ -1,0 +1,60 @@
+1. Những lớp nào là tập hợp (aggregate) của các lớp khác?
+Các lớp có quan hệ tập hợp như sau:
+
+CompactDisc được tập hợp bởi Track
+
+Store được tập hợp bởi Media
+
+Cart được tập hợp bởi Media
+
+=> Các lớp này quản lý danh sách các đối tượng khác thông qua mảng hoặc danh sách (ArrayList).
+
+2. Lớp nào nên triển khai giao diện Comparable?
+Lớp Media nên triển khai giao diện Comparable<Media>.
+
+ Vì Media là lớp chung cho nhiều loại sản phẩm (DVD, CD...) nên cần có khả năng sắp xếp mặc định (natural ordering).
+
+3. Trong những lớp đó, nên triển khai compareTo() như thế nào để phản ánh thứ tự mong muốn?
+Viết phương thức compareTo() so sánh theo tiêu đề (title) của sản phẩm.
+
+Ví dụ cách viết:
+
+
+public int compareTo(Media other) {
+    return this.getTitle().compareToIgnoreCase(other.getTitle());
+}
+=> Như vậy, các sản phẩm sẽ được sắp xếp tăng dần theo thứ tự bảng chữ cái của tiêu đề.
+
+4. Có thể có hai quy tắc sắp xếp (ví dụ: theo tiêu đề trước rồi đến giá, hoặc theo giá trước rồi tiêu đề) với Comparable không?
+Không.
+
+=> Comparable chỉ cho phép một cách sắp xếp duy nhất (natural ordering), không thể dùng Comparable cho nhiều kiểu sắp xếp khác nhau cùng lúc.
+
+Nếu muốn có nhiều kiểu sắp xếp, phải dùng thêm Comparator.
+
+5. Nếu DVD có yêu cầu sắp xếp theo tiêu đề → rồi độ dài giảm dần → rồi giá, làm thế nào?
+
+Phải viết thêm một lớp Comparator riêng cho DigitalVideoDisc.
+
+Ví dụ cách viết:
+
+
+public class DvdComparator implements Comparator<DigitalVideoDisc> {
+    public int compare(DigitalVideoDisc d1, DigitalVideoDisc d2) {
+        int titleCompare = d1.getTitle().compareToIgnoreCase(d2.getTitle());
+        if (titleCompare != 0) {
+            return titleCompare;
+        }
+
+        int lengthCompare = Integer.compare(d2.getLength(), d1.getLength()); // So sánh giảm dần độ dài
+        if (lengthCompare != 0) {
+            return lengthCompare;
+        }
+
+        return Float.compare(d1.getCost(), d2.getCost());
+    }
+}
+=> Khi dùng để sắp xếp:
+
+
+Collections.sort(dvdList, new DvdComparator());
