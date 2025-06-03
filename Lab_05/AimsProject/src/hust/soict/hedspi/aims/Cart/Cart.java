@@ -4,9 +4,11 @@ import hust.soict.hedspi.aims.Media.Media;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED = 20;
@@ -84,7 +86,34 @@ public class Cart {
             System.out.println("No Media found with title containing: " + title);
         }
     }
+
     public ObservableList<Media> getItemsOrdered() {
         return itemsOrdered;
+    }
+
+    public boolean isEmpty() {
+        return itemsOrdered.isEmpty();
+    }
+
+    public void clear() {
+        itemsOrdered.clear();
+    }
+
+    public void exportInvoiceToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("************** INVOICE **************\n");
+            writer.write("Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n");
+            writer.write("Ordered Items:\n");
+            int i = 1;
+            for (Media media : itemsOrdered) {
+                writer.write(String.format("%d. %s - %s : %.2f $\n",
+                        i++, media.getTitle(), media.getCategory(), media.getCost()));
+            }
+            writer.write(String.format("Total cost: %.2f $\n", totalCost()));
+            writer.write("*************************************\n");
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println("Error writing invoice to file: " + e.getMessage());
+        }
     }
 }

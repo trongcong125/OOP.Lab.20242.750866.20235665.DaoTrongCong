@@ -1,6 +1,5 @@
 package hust.soict.hedspi.aims.screen.manager;
 
-import hust.soict.hedspi.aims.Media.Media;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -19,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import hust.soict.hedspi.aims.Media.Media;
 import hust.soict.hedspi.aims.Store.Store;
 
 public class StoreManagerScreen extends JFrame {

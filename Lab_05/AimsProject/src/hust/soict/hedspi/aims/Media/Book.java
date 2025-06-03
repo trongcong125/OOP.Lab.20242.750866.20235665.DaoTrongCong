@@ -1,5 +1,4 @@
 package hust.soict.hedspi.aims.Media;
-
 import java.util.ArrayList;
 public class Book extends Media {
     private ArrayList<String> authors = new ArrayList<String>();
